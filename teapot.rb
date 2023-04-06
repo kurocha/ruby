@@ -14,20 +14,15 @@ define_target "ruby" do |target|
 		]
 		
 		ruby_library_directory = ENV.fetch('RUBYLIBDIR') do
-			File.expand_path("../lib", __dir__)
+			File.expand_path("../lib", target.context.root)
 		end
 		
 		ruby_install_path Build::Files::Path.new(ruby_library_directory)
 		
 		append linkflags [
-			# The library directory where ruby is installed:
-			"-L#{RbConfig::CONFIG['libdir']}",
-			
 			# The dynamic linker flags:
 			*Shellwords.split(RbConfig::CONFIG['DLDFLAGS']),
-			
-			# The libraries required to link against ruby:
-			*Shellwords.split(RbConfig::CONFIG['LIBRUBYARG']),
+			"-bundle_loader", RbConfig.ruby,
 		]
 	end
 end
