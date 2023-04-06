@@ -7,7 +7,7 @@ teapot_version "3.0"
 require 'shellwords'
 
 define_target "ruby" do |target|
-	target.provides "Platform/ruby" do
+	target.provides "Library/ruby" do
 		append header_search_paths [
 			Build::Files::Path.new(RbConfig::CONFIG['rubyarchhdrdir']),
 			Build::Files::Path.new(RbConfig::CONFIG['rubyhdrdir']),
