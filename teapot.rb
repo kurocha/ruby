@@ -22,7 +22,10 @@ define_target "ruby" do |target|
 		append linkflags [
 			# The dynamic linker flags:
 			*Shellwords.split(RbConfig::CONFIG['DLDFLAGS']),
-			"-bundle_loader", RbConfig.ruby,
 		]
+		
+		if RUBY_PLATFORM =~ /darwin/
+			append linkflags ["-bundle_loader", RbConfig.ruby]
+		end
 	end
 end
